@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+
+import { Router } from "@reach/router";
+import React, { useState } from "react";
+
 import './App.css';
+import Form from './components/Form';
+import People from './components/People';
+import Planets from "./components/Planets";
+
 
 function App() {
+  const [apiData, setApiData] = useState({});
+  const [isError, setIsError] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form 
+          setApiData={setApiData}
+          setIsError={setIsError}
+      />
+      <Router>
+        <People 
+            apiData={apiData} 
+            isError={isError}
+            path="/people/:id" 
+        />
+        <Planets
+            apiData={apiData} 
+            isError={isError} 
+            path="/planets/:id" 
+        />
+      </Router>
     </div>
   );
 }
